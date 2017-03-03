@@ -59,6 +59,7 @@ LOCAL_APPS = [
     # custom users app
     'django_budget.users.apps.UsersConfig',
     # Your stuff: custom apps go here
+    'django_budget.budget.apps.BudgetConfig',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
