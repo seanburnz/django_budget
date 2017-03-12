@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Transactions{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2>Transactions</h2>
+
+  <div class="list-group">
+    {% for transaction in object_list %}
+      <a href="{% url 'budget:transaction-detail' transaction.pk %}" class="list-group-item">
+        <h4 class="list-group-item-heading">{{ transaction.amount }}</h4>
+      </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock content %}

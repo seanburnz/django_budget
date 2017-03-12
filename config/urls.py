@@ -20,7 +20,7 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
 
     # Your stuff: custom urls includes go here
-
+    url(r'^budget/', include('django_budget.budget.urls', namespace='budget')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

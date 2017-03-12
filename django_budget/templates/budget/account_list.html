@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Members{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2>Accounts</h2>
+
+  <div class="list-group">
+    {% for account in account_list %}
+      <a href="{% url 'budget:account' account.pk %}" class="list-group-item">
+        <h4 class="list-group-item-heading">{{ account.name }}</h4>
+      </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock content %}
