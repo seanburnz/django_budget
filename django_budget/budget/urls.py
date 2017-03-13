@@ -12,17 +12,17 @@ urlpatterns = [
         name='transaction-list'
     ),
     url(
-        regex=r'^transaction/(?P<pk>[0-9]+)$',
+        regex=r'^transaction/(?P<pk>[0-9]+)/$',
         view=views.TransactionDetailView.as_view(),
         name='transaction-detail'
     ),
     url(
-        regex=r'^upload$',
+        regex=r'^upload/$',
         view=views.upload_transactions,
         name='transaction-upload'
     ),
     url(
-        regex=r'^account$',
+        regex=r'^account/$',
         view=views.AccountListView.as_view(),
         name='account-list'
     ),

@@ -59,21 +59,13 @@ class MintCategory(models.Model):
                 )
                 entry.save()
 
+
 class Transaction(models.Model):
-    CREDIT = 'CR'
-    DEBIT = 'DB'
-    TRANSACTION_TYPE_CHOICES = (
-        (CREDIT, 'credit'),
-        (DEBIT, 'debit'),
-    )
+
     trans_date = models.DateField
     description = models.CharField(max_length=200, blank=True)
     original_description = models.CharField(max_length=200, blank=True)
     amount = models.DecimalField(max_digits=19, decimal_places=2)
-    transaction_type = models.CharField(
-        max_length=2,
-        choices=TRANSACTION_TYPE_CHOICES,
-    )
     category = models.ForeignKey(MintCategory, on_delete=models.SET_NULL, null=True, blank=True)
     account_name = models.ForeignKey(Account, on_delete=models.CASCADE)
     labels = models.CharField(max_length=200, blank=True)
@@ -85,7 +77,7 @@ class Transaction(models.Model):
     @classmethod
     def mint_csv_import(cls, mint_csv_file, append=False):
         with open(mint_csv_file) as csvfile:
-            reader = DictReader(csvfile) #, delimiter=',', quotechar='"')
+            reader = DictReader(csvfile)
 
             if not append: Transaction.objects.all().delete()
 
@@ -93,10 +85,8 @@ class Transaction(models.Model):
             for row in reader:
                 dt = [int(n) for n in row['Date'].split('/')]
                 trans_date = datetime.date(dt[2],dt[0],dt[1])  # Mint 'Date' format m/d/y
-                transaction_type = ''
-                for choice in Transaction.TRANSACTION_TYPE_CHOICES:
-                    if row['Transaction Type'] == choice[1]: transaction_type = choice[0]
                 amount = Decimal(row['Amount'])
+                if row['Transaction Type'] == 'debit': amount = -amount
                 try:
                     category = MintCategory.objects.get(mint_category=row['Category'])
                 except ObjectDoesNotExist:
@@ -115,7 +105,6 @@ class Transaction(models.Model):
                 entry.description = row['Description']
                 entry.original_description = row['Original Description']
                 entry.amount = amount
-                entry.transaction_type = transaction_type
                 entry.category = category
                 entry.account_name = account_name
                 entry.labels = row['Labels']
