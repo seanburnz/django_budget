@@ -4,13 +4,27 @@
 {% block content %}
 <div class="container">
   <h2>Transactions</h2>
-
-  <div class="list-group">
+</div>
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
     {% for transaction in object_list %}
-      <a href="{% url 'budget:transaction-detail' transaction.pk %}" class="list-group-item">
-        <h4 class="list-group-item-heading">{{ transaction.amount }}</h4>
-      </a>
+      <tr>
+        <td>{{ transaction.trans_date }}</td>
+        <td>{{ transaction.description }}</td>
+        <td>{{ transaction.category }}</td>
+        <td><a href="{% url 'budget:transaction-detail' transaction.pk %}">{{ transaction.amount}}</a></td>
+      </tr>
     {% endfor %}
-  </div>
+    </tbody>
+  </table>
 </div>
 {% endblock content %}
