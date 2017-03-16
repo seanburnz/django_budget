@@ -62,7 +62,7 @@ class MintCategory(models.Model):
 
 class Transaction(models.Model):
 
-    trans_date = models.DateField
+    trans_date = models.DateField(null=True)
     description = models.CharField(max_length=200, blank=True)
     original_description = models.CharField(max_length=200, blank=True)
     amount = models.DecimalField(max_digits=19, decimal_places=2)
@@ -100,13 +100,14 @@ class Transaction(models.Model):
                     account_name = Account(name=row['Account Name'])
                     account_name.save()
 
-                entry = Transaction()
-                entry.trans_date = trans_date
-                entry.description = row['Description']
-                entry.original_description = row['Original Description']
-                entry.amount = amount
-                entry.category = category
-                entry.account_name = account_name
-                entry.labels = row['Labels']
-                entry.notes = row['Notes']
+                entry = Transaction(
+                    trans_date=trans_date,
+                    description=row['Description'],
+                    original_description=row['Original Description'],
+                    amount=amount,
+                    category=category,
+                    account_name=account_name,
+                    labels=row['Labels'],
+                    notes=row['Notes'],
+                )
                 entry.save()
