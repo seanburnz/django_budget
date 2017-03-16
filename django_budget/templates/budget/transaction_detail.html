@@ -3,11 +3,15 @@
 
 {% block content %}
 <div class="container">
-  <h2>Date</h2>
+  <h2>Transaction Detail</h2>
 
   <div class="list-group">
-    {{object.amount}}
+    {{object.trans_date}}
+    {{object.description}}
+    {{object.original_description}}
     {{object.category}}
+    {{object.amount}}
+    {{object.account_name}}
   </div>
 </div>
 {% endblock content %}
